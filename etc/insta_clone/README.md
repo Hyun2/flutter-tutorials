@@ -92,7 +92,9 @@ Scaffold(
 
 ## Icon vs. IconButton
 
+
 <img src="https://imgur.com/7RBP24k.jpg" width="380px" />
+
 
 ```dart
 Scaffold(
