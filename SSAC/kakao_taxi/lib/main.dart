@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_taxi/constants/common_size.dart';
 import 'package:kakao_taxi/constants/material_white.dart';
+import 'package:kakao_taxi/screens/animation_page.dart';
 import 'package:kakao_taxi/screens/business.dart';
 import 'package:kakao_taxi/screens/home.dart';
+import 'package:kakao_taxi/screens/service.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,11 +32,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
+  List<BottomNavigationBarItem> btmNavItems = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
+    BottomNavigationBarItem(icon: Icon(Icons.badge), label: '비즈니스'),
+    BottomNavigationBarItem(icon: Icon(Icons.notes_rounded), label: '이용서비스'),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.account_box_rounded), label: '내 정보'),
+  ];
+
   List<Widget> _screens = [
     Home(),
     Business(),
-    Container(color: Colors.deepOrangeAccent),
-    Container(color: Colors.deepPurpleAccent),
+    Service(),
+    AnimationPage(),
   ];
 
   @override
@@ -49,14 +59,7 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.badge), label: '비즈니스'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notes_rounded), label: '이용서비스'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_box_rounded), label: '내 정보'),
-        ],
+        items: btmNavItems,
         currentIndex: _selectedIndex,
         onTap: (int index) {
           setState(() {

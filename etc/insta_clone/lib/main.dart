@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clone/constants/material_white.dart';
 import 'package:insta_clone/constants/screen_size.dart';
+import 'package:insta_clone/screens/auth_screen.dart';
 import 'package:insta_clone/screens/feed_screen.dart';
 import 'package:insta_clone/screens/profile_screen.dart';
 
@@ -13,11 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Instagram Clone',
       theme: ThemeData(
         primarySwatch: white,
       ),
       home: HomePage(),
+      // home: AuthScreen(),
     );
   }
 }
@@ -30,7 +32,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  List<BottomNavigationBarItem> btmNavItem = [
+  List<BottomNavigationBarItem> btmNavItems = [
     BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: 'Home',
@@ -71,7 +73,7 @@ class _HomePageState extends State<HomePage> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: btmNavItem,
+        items: btmNavItems,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.black87,
         unselectedItemColor: Colors.grey,

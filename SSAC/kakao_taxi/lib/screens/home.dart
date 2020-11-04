@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_taxi/constants/common_size.dart';
+import 'package:kakao_taxi/popup/home.dart';
 import 'package:kakao_taxi/widgets/progress_indicator.dart';
 
 class Home extends StatelessWidget {
@@ -126,15 +127,23 @@ class Home extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(14.0),
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) {
-                      return MyProgressIndicator(
-                        containerSize: screenSize.width - 10,
-                        indicatorSize: 80,
-                      );
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomePopup(index: index)));
                     },
-                    fit: BoxFit.cover,
-                    imageUrl: 'https://picsum.photos/id/$index/400/600',
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) {
+                        return MyProgressIndicator(
+                          containerSize: screenSize.width - 10,
+                          indicatorSize: 80,
+                        );
+                      },
+                      fit: BoxFit.cover,
+                      imageUrl: 'https://picsum.photos/id/$index/400/600',
+                    ),
                   ),
                 ));
           },
@@ -143,15 +152,13 @@ class Home extends StatelessWidget {
     );
   }
 
-  Expanded _menu() {
-    return Expanded(
-      child: GridView.count(
-        crossAxisCount: 4,
-        children: homeBodyMenuItems,
-        physics: NeverScrollableScrollPhysics(),
-        childAspectRatio: 1,
-        shrinkWrap: true,
-      ),
+  GridView _menu() {
+    return GridView.count(
+      crossAxisCount: 4,
+      children: homeBodyMenuItems,
+      physics: NeverScrollableScrollPhysics(),
+      childAspectRatio: 1,
+      shrinkWrap: true,
     );
   }
 

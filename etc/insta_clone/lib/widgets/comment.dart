@@ -20,34 +20,30 @@ class Comment extends StatelessWidget {
     return Row(
       children: [
         showAvatar ? RoundedAvatar() : Container(),
-        Column(
-          children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: username,
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextSpan(text: '  '),
-                  TextSpan(
-                    text: text,
-                    style: TextStyle(color: Colors.black87),
-                  ),
-                ],
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: username,
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            dateTime != null
-                ? Text(
-                    dateTime.toIso8601String(),
-                    style: TextStyle(color: Colors.grey[400]),
-                  )
-                : Container()
-          ],
-        )
+              TextSpan(text: '  '),
+              TextSpan(
+                text: text,
+                style: TextStyle(color: Colors.black87),
+              ),
+            ],
+          ),
+        ),
+        dateTime != null
+            ? Text(
+                dateTime.toIso8601String(),
+                style: TextStyle(color: Colors.grey[400]),
+              )
+            : Container()
       ],
     );
   }

@@ -7,9 +7,14 @@ class FeedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CupertinoNavigationBar(
-        middle: Text('Instagram',
-            style: TextStyle(
-                fontFamily: 'VeganStyle', fontSize: 26, letterSpacing: 4)),
+        middle: Text(
+          'Instagram',
+          style: TextStyle(
+            fontFamily: 'VeganStyle',
+            fontSize: 20,
+            letterSpacing: 4,
+          ),
+        ),
         leading: Icon(CupertinoIcons.camera),
         trailing: IconButton(
           icon: ImageIcon(

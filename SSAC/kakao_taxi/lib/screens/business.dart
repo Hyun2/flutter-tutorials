@@ -24,22 +24,19 @@ class Business extends StatelessWidget {
             )),
       ),
     );
-    ;
   }
 
-  Expanded _image() {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 18.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: CachedNetworkImage(
-            placeholder: (context, url) {
-              return MyProgressIndicator(containerSize: screenSize.width);
-            },
-            fit: BoxFit.cover,
-            imageUrl: 'https://picsum.photos/400',
-          ),
+  Padding _image() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 18.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: CachedNetworkImage(
+          placeholder: (context, url) {
+            return MyProgressIndicator(containerSize: screenSize.width);
+          },
+          fit: BoxFit.cover,
+          imageUrl: 'https://picsum.photos/400',
         ),
       ),
     );

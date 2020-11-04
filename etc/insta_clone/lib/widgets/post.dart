@@ -13,15 +13,18 @@ class Post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _postHeader(),
-        _postImage(),
-        _postActions(),
-        _postLikes(),
-        _postCaption(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _postHeader(),
+          _postImage(),
+          _postActions(),
+          _postLikes(),
+          _postCaption(),
+        ],
+      ),
     );
   }
 
@@ -78,24 +81,31 @@ class Post extends StatelessWidget {
   }
 
   Widget _postHeader() {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(common_xxs_gap),
-          child: RoundedAvatar(),
-        ),
-        Expanded(
-            child:
-                Text('UserName', style: TextStyle(fontSize: avatar_name_size))),
-        IconButton(
-          icon: Icon(
-            Icons.more_horiz,
-            color: Colors.black87,
-            size: avatar_img_size,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: common_xxs_gap),
+            child: RoundedAvatar(),
           ),
-          onPressed: null,
-        )
-      ],
+          Expanded(
+              child: Text(
+            'Stocker',
+            style: TextStyle(
+              fontSize: avatar_name_size,
+            ),
+          )),
+          IconButton(
+            icon: Icon(
+              Icons.more_horiz,
+              color: Colors.black87,
+              size: avatar_img_size,
+            ),
+            onPressed: () {},
+          )
+        ],
+      ),
     );
   }
 
@@ -122,13 +132,10 @@ class Post extends StatelessWidget {
       imageBuilder: (context, imageProvider) {
         return AspectRatio(
             aspectRatio: 1.5,
-            child: Padding(
-              padding: const EdgeInsets.all(6.0),
-              child: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover))),
-            ));
+            child: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: imageProvider, fit: BoxFit.cover))));
       },
     );
   }

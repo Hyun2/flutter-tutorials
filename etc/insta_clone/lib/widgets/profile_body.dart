@@ -1,11 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:insta_clone/constants/common_size.dart';
 import 'package:insta_clone/constants/screen_size.dart';
+import 'package:insta_clone/screens/profile_screen.dart';
+import 'package:insta_clone/widgets/rounded_avatar.dart';
 
 class ProfileBody extends StatefulWidget {
+  final Function onClickedMenu;
+
   const ProfileBody({
     Key key,
+    this.onClickedMenu,
   }) : super(key: key);
 
   @override
@@ -14,50 +20,48 @@ class ProfileBody extends StatefulWidget {
 
 enum SelectedTab { left, right }
 
-class _ProfileBodyState extends State<ProfileBody> {
+class _ProfileBodyState extends State<ProfileBody>
+    with SingleTickerProviderStateMixin {
   SelectedTab _selectedTab = SelectedTab.left;
   double _leftImagesPage = 0;
   double _rightImagesPage = -screenSize.width;
+  AnimationController _menuAnimationController;
+
+  @override
+  void initState() {
+    _menuAnimationController =
+        AnimationController(vsync: this, duration: duration);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _menuAnimationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: CustomScrollView(
-        slivers: [
-          SliverList(
-              delegate: SliverChildListDelegate([
-            _userName(),
-            _userBio(),
-            _editProfileBtn(),
-            _tabBtns(),
-            _tabAnimation(),
-          ])),
-          SliverToBoxAdapter(
-            child: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  transform: Matrix4.translationValues(_leftImagesPage, 0, 0),
-                  curve: Curves.fastOutSlowIn,
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: _gridViewImages(),
-                  ),
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _appBar(widget.onClickedMenu),
+          Expanded(
+            child: CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    _profileHeader(),
+                    _userName(),
+                    _userBio(),
+                    _editProfileBtn(),
+                    _tabBtns(),
+                    _tabAnimation(),
+                  ]),
                 ),
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  transform: Matrix4.translationValues(_rightImagesPage, 0, 0),
-                  curve: Curves.fastOutSlowIn,
-                  child: GridView.count(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: _gridViewImages(),
-                  ),
+                SliverToBoxAdapter(
+                  child: _profileTabPage(),
                 ),
               ],
             ),
@@ -65,6 +69,102 @@ class _ProfileBodyState extends State<ProfileBody> {
         ],
       ),
     );
+  }
+
+  Stack _profileTabPage() {
+    return Stack(
+      children: [
+        AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          transform: Matrix4.translationValues(_leftImagesPage, 0, 0),
+          curve: Curves.fastOutSlowIn,
+          child: GridView.count(
+            crossAxisCount: 3,
+            childAspectRatio: 1,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: _gridViewImages(),
+          ),
+        ),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          transform: Matrix4.translationValues(_rightImagesPage, 0, 0),
+          curve: Curves.fastOutSlowIn,
+          child: GridView.count(
+            crossAxisCount: 3,
+            childAspectRatio: 1,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: _gridViewImages(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Padding _profileHeader() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: common_xxs_gap, horizontal: common_gap),
+      child: Row(
+        children: [
+          RoundedAvatar(size: 80),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Table(
+                children: [
+                  TableRow(children: [
+                    _valueText('123'),
+                    _valueText('444'),
+                    _valueText('432'),
+                  ]),
+                  TableRow(children: [
+                    _labelText('posts'),
+                    _labelText('followers'),
+                    _labelText('followings'),
+                  ]),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Row _appBar(onClickedMenu) {
+    return Row(
+      children: [
+        SizedBox(width: 44),
+        Expanded(
+          child: Text(
+            'Account 정보',
+            textAlign: TextAlign.center,
+          ),
+        ),
+        IconButton(
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: _menuAnimationController,
+          ),
+          onPressed: () {
+            onClickedMenu();
+            _menuAnimationController.isCompleted
+                ? _menuAnimationController.reverse()
+                : _menuAnimationController.forward();
+          },
+        ),
+      ],
+    );
+  }
+
+  Text _labelText(String label) => Text(label, textAlign: TextAlign.center);
+
+  Text _valueText(value) {
+    return Text(value,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16));
   }
 
   List<Widget> _gridViewImages() {
@@ -101,11 +201,7 @@ class _ProfileBodyState extends State<ProfileBody> {
           child: IconButton(
             icon: ImageIcon(AssetImage('assets/images/grid.png')),
             onPressed: () {
-              setState(() {
-                _selectedTab = SelectedTab.left;
-                _leftImagesPage = 0;
-                _rightImagesPage = -screenSize.width;
-              });
+              _tabSelected(SelectedTab.left);
             },
             color: _selectedTab == SelectedTab.left
                 ? Colors.black
@@ -116,11 +212,7 @@ class _ProfileBodyState extends State<ProfileBody> {
           child: IconButton(
             icon: ImageIcon(AssetImage('assets/images/saved.png')),
             onPressed: () {
-              setState(() {
-                _selectedTab = SelectedTab.right;
-                _leftImagesPage = screenSize.width;
-                _rightImagesPage = 0;
-              });
+              _tabSelected(SelectedTab.right);
             },
             color: _selectedTab == SelectedTab.right
                 ? Colors.black
@@ -129,6 +221,24 @@ class _ProfileBodyState extends State<ProfileBody> {
         )
       ],
     );
+  }
+
+  _tabSelected(SelectedTab selectedTab) {
+    setState(() {
+      switch (selectedTab) {
+        case SelectedTab.left:
+          _selectedTab = SelectedTab.left;
+          _leftImagesPage = 0;
+          _rightImagesPage = -screenSize.width;
+
+          break;
+        case SelectedTab.right:
+          _selectedTab = SelectedTab.right;
+          _leftImagesPage = screenSize.width;
+          _rightImagesPage = 0;
+          break;
+      }
+    });
   }
 
   Padding _editProfileBtn() {
@@ -150,14 +260,14 @@ class _ProfileBodyState extends State<ProfileBody> {
   Padding _userBio() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: common_gap),
-      child: Text('User Bio Info'),
+      child: Text('I want more money.'),
     );
   }
 
   Padding _userName() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: common_gap),
-      child: Text('User Name'),
+      child: Text('Tozau'),
     );
   }
 }
