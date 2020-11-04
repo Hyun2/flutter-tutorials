@@ -6,9 +6,17 @@ if (screenSize == null) screenSize = MediaQuery.of(context).size;
 
 
 
+## ListView
+
+![](https://imgur.com/U7QDPln.gif)
+
+- ListView: 스크롤이 가능한 위젯들을 리스트로 가지는 위젯
+
+
+
 ## Scaffold > bottomNavigationBar
 
-<img src="https://imgur.com/MolIQLg.jpg" width="400px" />
+<img src="https://imgur.com/MolIQLg.jpg" width="380px" />
 
 ```dart
 int _selectedIndex = 0;
@@ -56,7 +64,7 @@ Scaffold(
 
 ## IndexedStack
 
-<img src="https://imgur.com/rGFzJwf.gif" style="width:400px" />
+<img src="https://imgur.com/rGFzJwf.gif" style="width:380px" />
 
 ```dart
 int _selectedIndex = 0;
@@ -84,7 +92,7 @@ Scaffold(
 
 ## Icon vs. IconButton
 
-<img src="https://imgur.com/7RBP24k.jpg" style="width:400px" />
+<img src="https://imgur.com/7RBP24k.jpg" style="width:380px" />
 
 ```dart
 Scaffold(
@@ -113,7 +121,7 @@ Scaffold(
 
 ## Expanded, ClipOval
 
-<img src="https://imgur.com/IedP854.jpg" style="width:400px" />
+<img src="https://imgur.com/IedP854.jpg" style="width:380px" />
 
 
 
@@ -152,13 +160,13 @@ ClipOval(
 
 ##### Text를 Expanded로 감싸지 않았을 때는 아래와 같습니다.
 
-<img src="https://imgur.com/Tr8M7e5.jpg" style="width:400px" />
+<img src="https://imgur.com/Tr8M7e5.jpg" style="width:380px" />
 
 
 
 ## Spacer
 
-<img src="https://imgur.com/pBFNsat.jpg" style="width: 400px" />
+<img src="https://imgur.com/pBFNsat.jpg" style="width: 380px" />
 
 ```dart
 Row(
@@ -192,13 +200,13 @@ Row(
 
 ##### Spacer가 없을 때는 아래와 같습니다.
 
-<img src="https://imgur.com/M7lgLDC.jpg" style="width: 400px" />
+<img src="https://imgur.com/M7lgLDC.jpg" style="width: 380px" />
 
 
 
 ## RichText, TextSpan
 
-<img src="https://imgur.com/NVvlSe8.jpg" style="width: 400px" />
+<img src="https://imgur.com/NVvlSe8.jpg" style="width: 380px" />
 
 - RichText, TextSpan: rich text에서 텍스트 별로 별도의 스타일을 적용하기 위한 위젯
 
@@ -221,5 +229,33 @@ RichText(
         ],
     ),
 )
+```
+
+
+
+## Stack
+
+<img src="https://imgur.com/SrSjrp6.jpg" alt="img" style="width:380px;" />
+
+- Stack: 열과 행 또는 컨테이너 기반의 레이아웃 외에 중복이 가능한 레이아웃 구성을 가능케 하는 위젯
+- 파란색 영역은 스크롤이 가능(디바이스 크기에 따라 모든 컨텐츠가 표현되지 않을 때)하고, 빨간색 영역은 고정되어 있다.
+- FlatButton(구식) 대신 TextButton을 사용하자.
+
+
+
+##  (정리 중)Image.asset vs. ImageIcon > AssetImage
+
+```dart
+TextButton.icon(
+    style: TextButton.styleFrom(primary: Colors.blue[900]),
+    onPressed: () {},
+    // icon: Image.asset('assets/images/facebook.png'),
+    icon: ImageIcon(
+        AssetImage('assets/images/facebook.png'),
+    ),
+    label: Text(
+        'Login with Facebook',
+    ),
+),
 ```
 

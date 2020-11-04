@@ -10,7 +10,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  int selectedForm = 0;
+  int selectedForm = 1;
 
   @override
   Widget build(BuildContext context) {

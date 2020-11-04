@@ -47,7 +47,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide(color: Colors.grey[300])),
                     filled: true,
-                    fillColor: Colors.grey[100],
+                    fillColor: Colors.grey[200],
                   ),
                   validator: (value) {
                     if (value.isNotEmpty && value.contains('@')) {
@@ -71,7 +71,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide(color: Colors.grey[300])),
                     filled: true,
-                    fillColor: Colors.grey[100],
+                    fillColor: Colors.grey[200],
                   ),
                   validator: (value) {
                     if (value.isNotEmpty) {
@@ -95,7 +95,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide(color: Colors.grey[300])),
                     filled: true,
-                    fillColor: Colors.grey[100],
+                    fillColor: Colors.grey[200],
                   ),
                   validator: (value) {
                     if (value.isNotEmpty && _passwordController.text == value) {
