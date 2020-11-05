@@ -8,7 +8,7 @@ if (screenSize == null) screenSize = MediaQuery.of(context).size;
 
 ## ListView
 
-![](https://imgur.com/U7QDPln.gif)
+<p align="center"><img src="https://imgur.com/U7QDPln.gif" width="380" /></p>
 
 - ListView: 스크롤이 가능한 위젯들을 리스트로 가지는 위젯
 
@@ -16,7 +16,7 @@ if (screenSize == null) screenSize = MediaQuery.of(context).size;
 
 ## Scaffold > bottomNavigationBar
 
-<img src="https://imgur.com/MolIQLg.jpg" width="380px" />
+<p align="center"><img src="https://imgur.com/MolIQLg.jpg" width="380" /></p>
 
 ```dart
 int _selectedIndex = 0;
@@ -64,7 +64,7 @@ Scaffold(
 
 ## IndexedStack
 
-<img src="https://imgur.com/rGFzJwf.gif" style="width:380px" />
+<p align="center"><img src="https://imgur.com/rGFzJwf.gif" width="380" /></p>
 
 ```dart
 int _selectedIndex = 0;
@@ -122,7 +122,7 @@ Scaffold(
 
 ## Expanded, ClipOval
 
-<img src="https://imgur.com/IedP854.jpg" width="380px" />
+<p align="center"><img src="https://imgur.com/IedP854.jpg" width="380" /></p>
 
 
 
@@ -167,7 +167,7 @@ ClipOval(
 
 ## Spacer
 
-<img src="https://imgur.com/pBFNsat.jpg" width="380px" />
+<p align="center"><img src="https://imgur.com/pBFNsat.jpg" width="380" /></p>
 
 ```dart
 Row(
@@ -201,13 +201,13 @@ Row(
 
 ##### Spacer가 없을 때는 아래와 같습니다.
 
-<img src="https://imgur.com/M7lgLDC.jpg" width="380px" />
+<p align="center"><img src="https://imgur.com/M7lgLDC.jpg" width="380" /></p>
 
 
 
 ## RichText, TextSpan
 
-<img src="https://imgur.com/NVvlSe8.jpg" width="380px" />
+<p align="center"><img src="https://imgur.com/NVvlSe8.jpg" width="380" /></p>
 
 - RichText, TextSpan: rich text에서 텍스트 별로 별도의 스타일을 적용하기 위한 위젯
 
@@ -236,7 +236,7 @@ RichText(
 
 ## Stack
 
-<img src="https://imgur.com/SrSjrp6.jpg" alt="img" width="380px" />
+<p align="center"><img src="https://imgur.com/SrSjrp6.jpg" width="380" /></p>
 
 - Stack: 열과 행 또는 컨테이너 기반의 레이아웃 외에 중복이 가능한 레이아웃 구성을 가능케 하는 위젯
 - 파란색 영역은 스크롤이 가능(디바이스 크기에 따라 모든 컨텐츠가 표현되지 않을 때)하고, 빨간색 영역은 고정되어 있다.
