@@ -161,7 +161,7 @@ ClipOval(
 
 ##### Text를 Expanded로 감싸지 않았을 때는 아래와 같습니다.
 
-<img src="https://imgur.com/Tr8M7e5.jpg" width="380px" />
+<p align="center"><img src="https://imgur.com/Tr8M7e5.jpg" width="380" /></p>
 
 
 
