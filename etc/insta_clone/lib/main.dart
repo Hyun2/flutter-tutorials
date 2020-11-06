@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/constants/material_white.dart';
 import 'package:insta_clone/constants/screen_size.dart';
 import 'package:insta_clone/screens/auth_screen.dart';
+import 'package:insta_clone/screens/camera_screen.dart';
 import 'package:insta_clone/screens/feed_screen.dart';
 import 'package:insta_clone/screens/profile_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       label: 'Business',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.school),
+      icon: Icon(Icons.camera_alt),
       label: 'School',
     ),
     BottomNavigationBarItem(
@@ -63,11 +65,14 @@ class _HomePageState extends State<HomePage> {
     ProfileScreen(),
   ];
 
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     if (screenSize == null) screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      key: _scaffoldKey,
       body: IndexedStack(
         index: _selectedIndex,
         children: _screens,
@@ -78,11 +83,51 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.black87,
         unselectedItemColor: Colors.grey,
         onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          switch (index) {
+            case 2:
+              _openCamera(context);
+              break;
+            default:
+              {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              }
+          }
         },
       ),
     );
+  }
+
+  Future _openCamera(BuildContext context) async {
+    if (await _cameraPhonePermissionGranted(context)) {
+      return Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => CameraScreen(),
+      ));
+    } else {
+      SnackBar snackBar = SnackBar(
+        content: Text('사진, 파일, 마이크 사용을 허용하셔야 카메라를 사용할 수 있습니다.'),
+        action: SnackBarAction(
+            label: 'OK',
+            onPressed: () {
+              _scaffoldKey.currentState.hideCurrentSnackBar();
+            }),
+      );
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
+  }
+
+  Future<bool> _cameraPhonePermissionGranted(BuildContext context) async {
+    bool permitted = true;
+    Map<Permission, PermissionStatus> statuses =
+        await [Permission.camera, Permission.microphone].request();
+
+    statuses.forEach((permission, permissionStatus) {
+      if (!permissionStatus.isGranted) {
+        permitted = false;
+      }
+    });
+
+    return permitted;
   }
 }

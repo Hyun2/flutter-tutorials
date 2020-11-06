@@ -244,19 +244,41 @@ RichText(
 
 
 
-##  (정리 중)Image.asset vs. ImageIcon > AssetImage
+##  Image.asset vs. ImageIcon > AssetImage
+
+<p align="center"><img src="https://imgur.com/nyHq4Z8.jpg" width="380" /></p>
 
 ```dart
+Image.asset('assets/images/insta_text_logo.png');
+
+Row(
+    children: [
+        Spacer(),
+        TextButton(
+            onPressed: () {},
+            child: Text(
+                'Forgotten Password?',
+                style: TextStyle(color: Colors.blue[900]),
+            ),
+        ),
+    ],
+);
+
 TextButton.icon(
     style: TextButton.styleFrom(primary: Colors.blue[900]),
     onPressed: () {},
-    // icon: Image.asset('assets/images/facebook.png'),
+    // icon: Image.asset('assets/images/facebook.png'), // 불가
     icon: ImageIcon(
         AssetImage('assets/images/facebook.png'),
     ),
-    label: Text(
-        'Login with Facebook',
-    ),
-),
+    label: Text('Login with Facebook'),
+);
 ```
 
+
+
+## PageView
+
+<p align="center"><img src="https://imgur.com/Y6OPUbz.gif" width="380" /></p>
+
+- PageView: 페이지(자식 위젯들)를 상하 / 좌우로 스와이프 가능케 하는 위젯

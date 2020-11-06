@@ -4,6 +4,7 @@ import 'package:kakao_taxi/constants/material_white.dart';
 import 'package:kakao_taxi/screens/animation_page.dart';
 import 'package:kakao_taxi/screens/business.dart';
 import 'package:kakao_taxi/screens/home.dart';
+import 'package:kakao_taxi/screens/http_screen.dart';
 import 'package:kakao_taxi/screens/service.dart';
 
 void main() {
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
     BottomNavigationBarItem(icon: Icon(Icons.notes_rounded), label: '이용서비스'),
     BottomNavigationBarItem(
         icon: Icon(Icons.account_box_rounded), label: '내 정보'),
+    BottomNavigationBarItem(icon: Icon(Icons.network_check), label: 'http'),
   ];
 
   List<Widget> _screens = [
@@ -45,6 +47,7 @@ class _HomePageState extends State<HomePage> {
     Business(),
     Service(),
     AnimationPage(),
+    HttpScreen()
   ];
 
   @override

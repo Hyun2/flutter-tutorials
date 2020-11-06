@@ -40,7 +40,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                     hintText: 'Email',
                     focusedBorder: UnderlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
@@ -108,41 +108,32 @@ class _SignUpFormState extends State<SignUpForm> {
                 SizedBox(
                   height: common_gap,
                 ),
-                _joinBtn(context),
+                _signUpBtn(context),
                 SizedBox(height: common_gap),
                 _orDivider(),
-                FlatButton.icon(
-                    textColor: Colors.blue[900],
-                    onPressed: () {},
-                    icon: ImageIcon(
-                      AssetImage('assets/images/facebook.png'),
-                    ),
-                    label: Text('Login with Facebook',
-                        style: TextStyle(fontSize: 17))),
+                TextButton.icon(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(primary: Colors.blue[900]),
+                  icon: ImageIcon(AssetImage('assets/images/facebook.png')),
+                  label: Text('Login with Facebook'),
+                ),
               ],
             )),
       ),
     );
   }
 
-  FlatButton _joinBtn(BuildContext context) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(6),
-      ),
+  TextButton _signUpBtn(BuildContext context) {
+    return TextButton(
       onPressed: () {
         if (_formKey.currentState.validate()) {
-          print('validated');
           Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => HomePage(),
           ));
         }
       },
-      child: Text(
-        'Join',
-        style: TextStyle(color: Colors.white),
-      ),
-      color: Colors.blue,
+      child: Text('Sign Up'),
+      style: TextButton.styleFrom(backgroundColor: Colors.blue),
     );
   }
 
@@ -150,14 +141,9 @@ class _SignUpFormState extends State<SignUpForm> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Positioned(
-          left: 0,
-          right: 0,
-          // height: 1,
-          child: Container(
-            height: 1,
-            color: Colors.grey,
-          ),
+        Container(
+          height: 1,
+          color: Colors.grey,
         ),
         Container(
           width: 60,
