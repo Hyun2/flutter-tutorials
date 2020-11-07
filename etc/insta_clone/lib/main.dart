@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/constants/material_white.dart';
 import 'package:insta_clone/constants/screen_size.dart';
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: white,
       ),
-      // home: HomePage(),
-      home: AuthScreen(),
+      home: HomePage(),
+      // home: AuthScreen(),
     );
   }
 }
@@ -109,8 +110,10 @@ class _HomePageState extends State<HomePage> {
         content: Text('사진, 파일, 마이크 사용을 허용하셔야 카메라를 사용할 수 있습니다.'),
         action: SnackBarAction(
             label: 'OK',
+            textColor: Colors.white,
             onPressed: () {
               _scaffoldKey.currentState.hideCurrentSnackBar();
+              AppSettings.openAppSettings();
             }),
       );
       _scaffoldKey.currentState.showSnackBar(snackBar);
