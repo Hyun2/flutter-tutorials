@@ -13,6 +13,7 @@ class ConfList extends StatefulWidget {
 class _ConfListState extends State<ConfList> {
   List _confList = [];
   bool loaded = false;
+  final _searchController = TextEditingController();
 
   void load() async {
     setState(() {
@@ -37,6 +38,12 @@ class _ConfListState extends State<ConfList> {
   }
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -46,19 +53,34 @@ class _ConfListState extends State<ConfList> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ListTitle(title: 'Conferences'),
+              TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                  border: OutlineInputBorder(),
+                  labelText: 'Search',
+                ),
+                onChanged: (value) {
+                  setState(() {});
+                },
+              ),
               Expanded(
                 child: ListView.builder(
-                  itemBuilder: (context, index) => ListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    title: _listItem(index),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ConfDetail(
-                          confData: _confList[index],
-                        ),
-                      ));
-                    },
-                  ),
+                  itemBuilder: (context, index) {
+                    if (_searchController.text.isEmpty) {
+                      return _filteredItem(index, context);
+                    } else if (_confList[index]['name']
+                            .toLowerCase()
+                            .contains(_searchController.text.toLowerCase()) ||
+                        _confList[index]['location']
+                            .toLowerCase()
+                            .contains(_searchController.text.toLowerCase())) {
+                      return _filteredItem(index, context);
+                    } else {
+                      return Container();
+                    }
+                  },
                   itemCount: _confList.length,
                 ),
               )
@@ -66,6 +88,20 @@ class _ConfListState extends State<ConfList> {
           ),
         ),
       ),
+    );
+  }
+
+  ListTile _filteredItem(int index, BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.all(0),
+      title: _listItem(index),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ConfDetail(
+            confData: _confList[index],
+          ),
+        ));
+      },
     );
   }
 
