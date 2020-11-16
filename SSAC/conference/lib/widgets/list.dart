@@ -49,6 +49,7 @@ class _ConfListState extends State<ConfList> {
               Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) => ListTile(
+                    contentPadding: EdgeInsets.all(0),
                     title: _listItem(index),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -68,11 +69,13 @@ class _ConfListState extends State<ConfList> {
     );
   }
 
-  Column _listItem(int index) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(_confList[index]['name']),
-          Text(_confList[index]['location']),
-        ],
+  Container _listItem(int index) => Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(_confList[index]['name']),
+            Text(_confList[index]['location']),
+          ],
+        ),
       );
 }

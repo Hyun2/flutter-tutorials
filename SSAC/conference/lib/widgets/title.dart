@@ -9,7 +9,8 @@ class ListTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5.0),
-      child: Text(title, style: TextStyle(fontSize: 28)),
+      child: Text(title,
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
     );
   }
 }

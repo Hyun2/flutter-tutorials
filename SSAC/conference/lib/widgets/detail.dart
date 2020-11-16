@@ -33,11 +33,11 @@ class ConfDetail extends StatelessWidget {
               innerText(confData['location']),
               innerText("${confData['start']} ~ ${confData['end']}"),
               TextButton(
-                  onPressed: () {
-                    print(confData['link']);
-                    _launchURL(confData['link']);
-                  },
-                  child: Text("Go to official website"))
+                onPressed: () {
+                  _launchURL(confData['link']);
+                },
+                child: Text("Go to official website"),
+              )
             ],
           ),
         ),
