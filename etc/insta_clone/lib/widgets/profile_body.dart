@@ -95,7 +95,7 @@ class _ProfileBodyState extends State<ProfileBody>
             childAspectRatio: 1,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            children: _gridViewImages(),
+            children: _gridViewImages2(),
           ),
         ),
       ],
@@ -169,11 +169,33 @@ class _ProfileBodyState extends State<ProfileBody>
 
   List<Widget> _gridViewImages() {
     return List.generate(
-        30,
-        (index) => CachedNetworkImage(
+      30,
+      (index) => CachedNetworkImage(
+        fit: BoxFit.cover,
+        imageUrl: 'https://picsum.photos/id/${index}/150/150',
+      ),
+    );
+  }
+
+  List<Widget> _gridViewImages2() {
+    List res = List.generate(30, (index) => index);
+    res.sort((a, b) => b.compareTo(a));
+    print(res);
+
+    return res
+        .map((index) => CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl: 'https://picsum.photos/id/${index}/150/150',
-            ));
+            ))
+        .toList();
+
+    // return List.generate(
+    //   30,
+    //   (index) => CachedNetworkImage(
+    //     fit: BoxFit.cover,
+    //     imageUrl: 'https://picsum.photos/id/${index}/150/150',
+    //   ),
+    // );
   }
 
   Padding _tabAnimation() {

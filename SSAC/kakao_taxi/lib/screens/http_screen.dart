@@ -8,7 +8,6 @@ class HttpScreen extends StatefulWidget {
 }
 
 class _HttpScreenState extends State<HttpScreen> {
-  // Future<Album> futureAlbum;
   List users = [];
 
   void getUsers() async {
@@ -26,12 +25,13 @@ class _HttpScreenState extends State<HttpScreen> {
       body: ListView.builder(
         shrinkWrap: true,
         itemBuilder: (context, index) => ListTile(
-          title: users.length > 0 ? Text(users[index]['name']) : Text(''),
+          title: Text(users[index]['name']),
           onTap: () {},
         ),
         itemCount: users.length,
       ),
       floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
             onPressed: () {
@@ -41,7 +41,9 @@ class _HttpScreenState extends State<HttpScreen> {
             },
             child: Icon(Icons.remove),
           ),
-          Spacer(),
+          SizedBox(
+            width: 30,
+          ),
           FloatingActionButton(
             onPressed: () {
               getUsers();
