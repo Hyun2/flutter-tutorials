@@ -62,7 +62,7 @@ class ConfDetail extends StatelessWidget {
   }
 
   String convertDate(String dateTime) {
-    DateFormat dateFormatter = new DateFormat.yMMMMd('en_US');
+    DateFormat dateFormatter = new DateFormat('MMM dd, yyyy');
     String res =
         dateFormatter.format(DateTime.parse(dateTime.replaceAll('-', '')));
 
