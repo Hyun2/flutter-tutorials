@@ -3,31 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
-class ConfDetail extends StatefulWidget {
+class ConfDetail extends StatelessWidget {
   final confData;
 
   const ConfDetail({Key key, this.confData}) : super(key: key);
-
-  @override
-  _ConfDetailState createState() => _ConfDetailState();
-}
-
-class _ConfDetailState extends State<ConfDetail> {
-  String start;
-  String end;
-  DateFormat dateFormatter = new DateFormat.yMMMMd('en_US');
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    setState(() {
-      start = dateFormatter
-          .format(DateTime.parse(widget.confData['start'].replaceAll('-', '')));
-      end = dateFormatter
-          .format(DateTime.parse(widget.confData['end'].replaceAll('-', '')));
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +30,14 @@ class _ConfDetailState extends State<ConfDetail> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ListTitle(title: widget.confData['name']),
-              innerText(widget.confData['location']),
-              innerText("${start} ~ ${end}"),
+              ListTitle(title: confData['name']),
+              innerText(confData['location']),
+              innerText(
+                  "${convertDate(confData['start'])} ~ ${convertDate(confData['end'])}"),
+              // innerText("${start} ~ ${end}"),
               TextButton(
                 onPressed: () {
-                  _launchURL(widget.confData['link']);
+                  _launchURL(confData['link']);
                 },
                 child: Text("Go to official website"),
               )
@@ -78,5 +59,13 @@ class _ConfDetailState extends State<ConfDetail> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  String convertDate(String dateTime) {
+    DateFormat dateFormatter = new DateFormat.yMMMMd('en_US');
+    String res =
+        dateFormatter.format(DateTime.parse(dateTime.replaceAll('-', '')));
+
+    return res;
   }
 }
