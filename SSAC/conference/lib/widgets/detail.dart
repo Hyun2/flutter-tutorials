@@ -1,11 +1,33 @@
 import 'package:conference/widgets/title.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
-class ConfDetail extends StatelessWidget {
+class ConfDetail extends StatefulWidget {
   final confData;
 
   const ConfDetail({Key key, this.confData}) : super(key: key);
+
+  @override
+  _ConfDetailState createState() => _ConfDetailState();
+}
+
+class _ConfDetailState extends State<ConfDetail> {
+  String start;
+  String end;
+  DateFormat dateFormatter = new DateFormat.yMMMMd('en_US');
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      start = dateFormatter
+          .format(DateTime.parse(widget.confData['start'].replaceAll('-', '')));
+      end = dateFormatter
+          .format(DateTime.parse(widget.confData['end'].replaceAll('-', '')));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +51,12 @@ class ConfDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ListTitle(title: confData['name']),
-              innerText(confData['location']),
-              innerText("${confData['start']} ~ ${confData['end']}"),
+              ListTitle(title: widget.confData['name']),
+              innerText(widget.confData['location']),
+              innerText("${start} ~ ${end}"),
               TextButton(
                 onPressed: () {
-                  _launchURL(confData['link']);
+                  _launchURL(widget.confData['link']);
                 },
                 child: Text("Go to official website"),
               )
