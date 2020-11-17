@@ -1,16 +1,75 @@
-# conference
+<p align="center"><img src="https://i.imgur.com/tDwAbjG.gif" width="380"></p>
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## LIST 데이터 로드
 
-A few resources to get you started if this is your first Flutter project:
+```dart
+void load() async {
+    setState(() {
+        _confList = [];
+    });
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+    String apiURL =
+        'https://raw.githubusercontent.com/junsuk5/mock_json/main/conferences.json';
+    var res = await http.get(apiURL);
+    var data = jsonDecode(res.body);
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    setState(() {
+        _confList = data;
+        loaded = true;
+    });
+}
+
+@override
+void initState() {
+    load();
+    super.initState();
+}
+```
+
+
+
+## 동적 ListView 필터
+
+```dart
+ListView.builder(
+  itemBuilder: (context, index) {
+    if (_searchController.text.isEmpty) {
+      return _filteredItem(index, context);
+    } else if (_confList[index]['name']
+            .toLowerCase()
+            .contains(_searchController.text) ||
+        _confList[index]['location']
+            .toLowerCase()
+            .contains(_searchController.text)) {
+      return _filteredItem(index, context);
+    } else {
+      return Container();
+    }
+  },
+  itemCount: _confList.length,
+)
+```
+
+
+
+## 앱에서 http 링크 연결
+
+- `url_launcher` 패키지 사용
+
+```dart
+void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+onPressed: () {
+	_launchURL(confData['link']);
+}
+```
+
+- forceWebView: 기본적으로 안드로이드는 url 핸들링을 위해서 브라우저를 연다. 이것을 앱 내에서 핸들링하기 위해서 해당 파라미터 값으로 true 전달
