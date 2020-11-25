@@ -8,7 +8,6 @@ class CameraState extends ChangeNotifier {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     if (_controller != null) {
       _controller.dispose();
       _controller = null;

@@ -25,23 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           AnimatedContainer(
             duration: duration,
             transform: Matrix4.translationValues(_profileXpos, 0, 0),
-            child: ProfileBody(onClickedMenu: () {
-              setState(() {
-                _menuStatus = (_menuStatus == MenuStatus.closed)
-                    ? MenuStatus.opened
-                    : MenuStatus.closed;
-                switch (_menuStatus) {
-                  case MenuStatus.closed:
-                    _profileXpos = 0;
-                    _menuXpos = screenSize.width;
-                    break;
-                  case MenuStatus.opened:
-                    _profileXpos = -menuWidth;
-                    _menuXpos = screenSize.width - menuWidth;
-                    break;
-                }
-              });
-            }),
+            child: ProfileBody(onClickedMenu: _toggleMenu),
           ),
           AnimatedContainer(
             duration: duration,
@@ -57,6 +41,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  _toggleMenu() {
+    setState(() {
+      _menuStatus = (_menuStatus == MenuStatus.closed)
+          ? MenuStatus.opened
+          : MenuStatus.closed;
+      switch (_menuStatus) {
+        case MenuStatus.closed:
+          _profileXpos = 0;
+          _menuXpos = screenSize.width;
+          break;
+        case MenuStatus.opened:
+          _profileXpos = -menuWidth;
+          _menuXpos = screenSize.width - menuWidth;
+          break;
+      }
+    });
   }
 }
 

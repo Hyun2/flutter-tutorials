@@ -1,28 +1,65 @@
+import 'dart:io';
+
 import 'package:app_settings/app_settings.dart';
+import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/constants/material_white.dart';
 import 'package:insta_clone/constants/screen_size.dart';
+import 'package:insta_clone/models/firebase_auth_state.dart';
 import 'package:insta_clone/screens/auth_screen.dart';
 import 'package:insta_clone/screens/camera_screen.dart';
 import 'package:insta_clone/screens/feed_screen.dart';
 import 'package:insta_clone/screens/profile_screen.dart';
+import 'package:insta_clone/screens/search_screen.dart';
+import 'package:insta_clone/widgets/my_progress_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  FirebaseAuthState _firebaseAuthState = FirebaseAuthState();
+  Widget _currentWidget;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Instagram Clone',
-      theme: ThemeData(
-        primarySwatch: white,
+    _firebaseAuthState.watchAuthChange();
+
+    return ChangeNotifierProvider<FirebaseAuthState>.value(
+      value: _firebaseAuthState,
+      child: MaterialApp(
+        title: 'Instagram Clone',
+        theme: ThemeData(
+          primarySwatch: white,
+        ),
+        home: Consumer<FirebaseAuthState>(
+          child: HomePage(),
+          builder: (context, FirebaseAuthState firebaseAuthState, child) {
+            switch (firebaseAuthState.firebaseAuthStatus) {
+              case FirebaseAuthStatus.signout:
+                _currentWidget = AuthScreen();
+                break;
+              case FirebaseAuthStatus.signin:
+                _currentWidget = HomePage();
+                break;
+              default:
+                _currentWidget = MyProgressIndicator();
+                break;
+            }
+            return AnimatedSwitcher(
+              duration: Duration(milliseconds: 900),
+              child: _currentWidget,
+            );
+          },
+        ),
+        // home: AuthScreen(),
       ),
-      home: HomePage(),
-      // home: AuthScreen(),
     );
   }
 }
@@ -60,9 +97,10 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _screens = [
     FeedScreen(),
-    Container(color: Colors.blueAccent),
-    Container(color: Colors.cyanAccent),
+    SearchScreen(),
     Container(color: Colors.deepOrangeAccent),
+    Container(color: Colors.deepOrangeAccent),
+    // AuthScreen(),
     ProfileScreen(),
   ];
 
@@ -122,8 +160,11 @@ class _HomePageState extends State<HomePage> {
 
   Future<bool> _cameraPhonePermissionGranted(BuildContext context) async {
     bool permitted = true;
-    Map<Permission, PermissionStatus> statuses =
-        await [Permission.camera, Permission.microphone].request();
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.microphone,
+      Platform.isIOS ? Permission.photos : Permission.storage
+    ].request();
 
     statuses.forEach((permission, permissionStatus) {
       if (!permissionStatus.isGranted) {

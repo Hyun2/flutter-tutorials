@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:insta_clone/screens/auth_screen.dart';
 import 'package:insta_clone/widgets/sign_in_form.dart';
 import 'package:insta_clone/widgets/sign_up_form.dart';
 

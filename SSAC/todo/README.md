@@ -1,3 +1,6 @@
+- 최초 welcome message: shared_preference
+- 데이터베이스 sqflite
+
 # todo
 
 A new Flutter project.

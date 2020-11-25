@@ -136,7 +136,10 @@ class _ProfileBodyState extends State<ProfileBody>
   Row _appBar(onClickedMenu) {
     return Row(
       children: [
-        SizedBox(width: 44),
+        IconButton(
+          icon: Icon(Icons.menu, color: Colors.transparent),
+          onPressed: null,
+        ),
         Expanded(
           child: Text(
             'Account 정보',
@@ -172,7 +175,7 @@ class _ProfileBodyState extends State<ProfileBody>
       30,
       (index) => CachedNetworkImage(
         fit: BoxFit.cover,
-        imageUrl: 'https://picsum.photos/id/${index}/150/150',
+        imageUrl: 'https://picsum.photos/id/$index/150/150',
       ),
     );
   }
@@ -185,7 +188,7 @@ class _ProfileBodyState extends State<ProfileBody>
     return res
         .map((index) => CachedNetworkImage(
               fit: BoxFit.cover,
-              imageUrl: 'https://picsum.photos/id/${index}/150/150',
+              imageUrl: 'https://picsum.photos/id/$index/150/150',
             ))
         .toList();
 

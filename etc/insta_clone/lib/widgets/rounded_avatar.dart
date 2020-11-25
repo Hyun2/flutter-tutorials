@@ -12,7 +12,8 @@ class RoundedAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipOval(
-      child: CachedNetworkImage(imageUrl: 'https://picsum.photos/$size'),
+      // child: CachedNetworkImage(imageUrl: 'https://picsum.photos/id/4/$size/$size'),
+      child: Image.network('https://picsum.photos/$size')
     );
   }
 }

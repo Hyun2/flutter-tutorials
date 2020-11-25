@@ -116,26 +116,19 @@ class Post extends StatelessWidget {
         return MyProgressIndicator(
           containerSize: screenSize.width,
         );
-        // return Container(
-        //     width: size.width,
-        //     height: size.width,
-        //     child: Center(
-        //       child: SizedBox(
-        //         width: 60,
-        //         height: 60,
-        //         child: CircularProgressIndicator(
-        //           backgroundColor: Colors.black38,
-        //         ),
-        //       ),
-        //     ));
       },
       imageBuilder: (context, imageProvider) {
         return AspectRatio(
-            aspectRatio: 1.5,
-            child: Container(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: imageProvider, fit: BoxFit.cover))));
+          aspectRatio: 1.5,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        );
       },
     );
   }
